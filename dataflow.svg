@@ -1,0 +1,63 @@
+<svg viewBox="0 0 680 480" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>project-captain 数据流图</title>
+  <desc>数据从用户操作进入前端，经后端云函数存取云数据库；AI 建议由后端持密钥向豆包或 DeepSeek 获取</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <text x="340" y="34" text-anchor="middle" font-size="15" font-weight="500" fill="#2C2C2A" font-family="PingFang SC, Microsoft YaHei, sans-serif">project-captain 数据流图：数据从哪来、到哪去</text>
+
+  <circle cx="72" cy="142" r="24" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="72" y="138" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">用户</text>
+  <text x="72" y="156" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#5F5E5A" font-family="PingFang SC, Microsoft YaHei, sans-serif">你</text>
+
+  <g>
+    <rect x="130" y="110" width="160" height="64" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+    <text x="210" y="134" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#0C447C" font-family="PingFang SC, Microsoft YaHei, sans-serif">前端 React + Vite</text>
+    <text x="210" y="154" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#185FA5" font-family="PingFang SC, Microsoft YaHei, sans-serif">浏览器里的页面</text>
+  </g>
+
+  <g>
+    <rect x="340" y="110" width="150" height="64" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+    <text x="415" y="134" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041" font-family="PingFang SC, Microsoft YaHei, sans-serif">后端云函数</text>
+    <text x="415" y="154" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56" font-family="PingFang SC, Microsoft YaHei, sans-serif">Node.js · 持密钥</text>
+  </g>
+
+  <g>
+    <rect x="525" y="110" width="115" height="64" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+    <text x="582" y="134" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#633806" font-family="PingFang SC, Microsoft YaHei, sans-serif">AI 接口</text>
+    <text x="582" y="154" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#854F0B" font-family="PingFang SC, Microsoft YaHei, sans-serif">豆包 / DeepSeek</text>
+  </g>
+
+  <g>
+    <rect x="340" y="268" width="150" height="56" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+    <text x="415" y="290" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#27500A" font-family="PingFang SC, Microsoft YaHei, sans-serif">PostgreSQL</text>
+    <text x="415" y="308" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#3B6D11" font-family="PingFang SC, Microsoft YaHei, sans-serif">云数据库 · 仓库</text>
+  </g>
+
+  <line x1="98" y1="142" x2="124" y2="142" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <line x1="292" y1="130" x2="334" y2="130" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="313" y="120" text-anchor="middle" font-size="12" fill="#185FA5" font-family="PingFang SC, Microsoft YaHei, sans-serif">② 请求</text>
+  <line x1="334" y1="155" x2="292" y2="155" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="313" y="176" text-anchor="middle" font-size="12" fill="#0F6E56" font-family="PingFang SC, Microsoft YaHei, sans-serif">⑥ 结果</text>
+  <line x1="390" y1="176" x2="390" y2="262" stroke="#3B6D11" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="378" y="222" text-anchor="end" font-size="12" fill="#3B6D11" font-family="PingFang SC, Microsoft YaHei, sans-serif">③ 存</text>
+  <line x1="442" y1="262" x2="442" y2="176" stroke="#639922" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="454" y="222" text-anchor="start" font-size="12" fill="#3B6D11" font-family="PingFang SC, Microsoft YaHei, sans-serif">④ 取</text>
+  <line x1="492" y1="126" x2="519" y2="126" stroke="#854F0B" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="505" y="114" text-anchor="middle" font-size="12" fill="#854F0B" font-family="PingFang SC, Microsoft YaHei, sans-serif">⑤ 带密钥</text>
+  <line x1="519" y1="160" x2="492" y2="160" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="505" y="184" text-anchor="middle" font-size="12" fill="#854F0B" font-family="PingFang SC, Microsoft YaHei, sans-serif">建议</text>
+
+  <text x="210" y="196" text-anchor="middle" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">① 填表单 · 点勾选</text>
+  <text x="415" y="352" text-anchor="middle" font-size="12" fill="#5F5E5A" font-family="PingFang SC, Microsoft YaHei, sans-serif">密钥只住在后端，前端和浏览器永远看不到它</text>
+
+  <line x1="40" y1="380" x2="640" y2="380" stroke="#B4B2A9" stroke-width="0.5"/>
+  <text x="50" y="408" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">① 数据从你的动作来（填表单、点勾选）</text>
+  <text x="380" y="408" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">② 前端把请求发给后端</text>
+  <text x="50" y="432" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">③ 后端把数据存进数据库</text>
+  <text x="380" y="432" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">④ 页面显示时后端从数据库取</text>
+  <text x="50" y="456" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">⑤ AI 建议由后端持密钥去取，密钥不经过前端</text>
+  <text x="380" y="456" font-size="12" fill="#444441" font-family="PingFang SC, Microsoft YaHei, sans-serif">⑥ 结果沿原路回到页面上</text>
+</svg>
