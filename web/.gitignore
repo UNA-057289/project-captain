@@ -1,0 +1,9 @@
+# 依赖文件夹（可以随时用 npm install 重新装回来，不进仓库）
+node_modules
+
+# 构建产物
+dist
+
+# 本地环境变量（永不提交）
+.env
+.env.local

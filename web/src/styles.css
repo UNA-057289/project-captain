@@ -1,0 +1,94 @@
+/* 全站样式：浅色、简单、零基础不培训就会用（PRD 交互总原则） */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f6f8;
+  color: #1f2937;
+}
+
+.page { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.topbar h1 { font-size: 22px; font-weight: 600; }
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.cards { display: grid; gap: 12px; }
+
+.project-card { cursor: pointer; transition: border-color .15s; }
+.project-card:hover { border-color: #185fa5; }
+.project-card h3 { font-size: 17px; margin-bottom: 4px; }
+
+.muted { color: #6b7280; }
+.small { font-size: 13px; }
+
+.form { margin-bottom: 20px; display: grid; gap: 12px; }
+.form label { display: grid; gap: 4px; font-size: 14px; }
+.form input {
+  border: 1px solid #d1d5db; border-radius: 8px;
+  padding: 8px 10px; font-size: 14px;
+}
+.form input:focus { outline: 2px solid #b5d4f4; }
+
+.err { color: #a32d2d; font-size: 13px; }
+
+.row { display: flex; gap: 10px; }
+.row label { flex: 1; }
+
+.btn {
+  border: 1px solid #d1d5db; background: #fff; color: #1f2937;
+  border-radius: 8px; padding: 8px 14px; font-size: 14px;
+  cursor: pointer; text-decoration: none; display: inline-block;
+}
+.btn:hover { background: #f3f4f6; }
+.btn-primary { background: #185fa5; border-color: #185fa5; color: #fff; }
+.btn-primary:hover { background: #0c447c; }
+.btn-back { margin-bottom: 16px; }
+
+.empty { text-align: center; color: #6b7280; padding: 40px 16px; }
+
+/* 进度条 */
+.progress-line { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.progress-track { flex: 1; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: #1d9e75; border-radius: 4px; }
+.progress-num { font-size: 13px; color: #085041; font-weight: 600; }
+
+/* 详情页 */
+.detail-head { margin-bottom: 16px; }
+.detail-head h1 { font-size: 20px; margin-bottom: 4px; }
+
+.days { display: grid; gap: 10px; }
+.day-card.done { background: #f0faf4; border-color: #b7e4d2; }
+.day-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.check-line { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.check-line input { width: 16px; height: 16px; cursor: pointer; }
+.day-title { font-weight: 600; font-size: 15px; }
+.day-done-tag { color: #0f6e56; font-size: 13px; }
+.day-card.done .day-title { text-decoration: line-through; color: #6b7280; }
+
+.todo-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.btn-mini { padding: 3px 8px; font-size: 12px; }
+.edit-box { display: flex; gap: 6px; margin-bottom: 6px; }
+.edit-box input { flex: 1; border: 1px solid #d1d5db; border-radius: 6px; padding: 6px 8px; font-size: 13px; }
+.note { background: #f9fafb; border-radius: 6px; padding: 6px 8px; font-size: 13px; color: #374151; margin-bottom: 6px; }
+
+/* Day 7 升级：每天多条待办 */
+.items { display: grid; gap: 4px; margin-bottom: 8px; }
+.item-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 0; }
+.item-text { font-size: 14px; }
+.item-row.item-done .item-text { text-decoration: line-through; color: #9ca3af; }
+.item-actions { display: flex; gap: 6px; }
+.btn-del:hover { color: #a32d2d; border-color: #a32d2d; background: #fdf2f2; }
+.btn-add { margin-bottom: 8px; }
+.edit-box.inline { flex: 1; margin: 0; }
+
+/* AI 生成按钮（模拟版，下周换真接口） */
+.ai-line { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.btn-ai { background: #f3ecfd; border-color: #d8c6f5; color: #5b2d9e; }
+.btn-ai:hover { background: #e9ddf9; }
