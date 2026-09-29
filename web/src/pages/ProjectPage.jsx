@@ -33,7 +33,10 @@ export default function ProjectPage() {
       <div className="card detail-head">
         <h1>{project.name}</h1>
         {project.description && <p className="muted">{project.description}</p>}
-        <p className="muted small">{project.startDate} ~ {project.dueDate}</p>
+        <p className="muted small">📅 {project.startDate} ~ {project.dueDate}</p>
+        {/* Day 8 问卷向导新增的两个字段：内容方案 / 使用对象（填了才显示） */}
+        {project.content && <p className="muted small">📋 {project.content}</p>}
+        {project.audience && <p className="muted small">🎯 使用对象：{project.audience}</p>}
         <div className="progress-line">
           <div className="progress-track">
             <div className="progress-fill" style={{ width: progress + '%' }} />

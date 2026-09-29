@@ -62,12 +62,15 @@ export function generateSkeleton(startDate, dueDate) {
 }
 
 // 新建项目：数据校验在页面层做，这里只负责存
-export function createProject({ name, description, startDate, dueDate }) {
+// content（内容与方案）、audience（使用对象）来自 Day 8 的四步问卷向导，选填
+export function createProject({ name, description, startDate, dueDate, content, audience }) {
   const data = loadData()
   const project = {
     id: makeId(),
     name,
     description: description || '',
+    content: content || '',     // 项目内容/方案（问卷第 3 步）
+    audience: audience || '',   // 使用对象（问卷第 4 步）
     startDate,
     dueDate,
     createdAt: new Date().toISOString(),

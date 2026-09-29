@@ -7,7 +7,7 @@ body {
   color: #1f2937;
 }
 
-.page { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+.page { max-width: 1000px; margin: 0 auto; padding: 24px 16px 60px; }
 
 .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .topbar h1 { font-size: 22px; font-weight: 600; }
@@ -92,3 +92,157 @@ body {
 .ai-line { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .btn-ai { background: #f3ecfd; border-color: #d8c6f5; color: #5b2d9e; }
 .btn-ai:hover { background: #e9ddf9; }
+
+/* ---- Day 8：四状态 + 分区 + 响应式 ---- */
+
+/* 加载中：骨架屏（灰色占位 + 呼吸闪烁） */
+.skeleton-card { cursor: default; }
+.skeleton {
+  background: #e9ebee; border-radius: 6px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.skeleton-title { height: 18px; width: 40%; margin-bottom: 10px; }
+.skeleton-line { height: 12px; width: 90%; margin-bottom: 8px; }
+.skeleton-bar { height: 8px; width: 100%; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+/* 错误状态 */
+.error-card { text-align: center; padding: 32px 16px; color: #a32d2d; }
+.error-card .btn { margin-top: 12px; }
+
+/* 分区标题 + 徽标 */
+.section-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+.card-title-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.badge {
+  flex-shrink: 0; font-size: 12px; color: #0f6e56;
+  background: #e8f7f0; border-radius: 10px; padding: 2px 8px;
+}
+.empty-mini { padding: 12px; }
+
+/* 桌面宽：进行中 / 历史两栏并排（进行中占 2/3、历史占 1/3——Day 8 用户拍板） */
+.home-columns { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+
+/* ---- Day 8 美化升级：可爱萌趣像素风（覆盖层：同名规则写在后面自动生效）---- */
+
+/* 棋盘格淡彩背景 + 像素描边 + 硬阴影的整体气质 */
+body {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,.5) 22px 24px),
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(255,255,255,.5) 22px 24px),
+    linear-gradient(135deg, #fdf2f8 0%, #ede9fe 45%, #e0f2fe 100%);
+}
+.card {
+  border: 2px solid #3b3454;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 rgba(59, 52, 84, .18);
+}
+.project-card { transition: transform .12s, box-shadow .12s; }
+.project-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(59, 52, 84, .25);
+  border-color: #7c5cd6;
+}
+.btn {
+  border: 2px solid #3b3454;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 3px 3px 0 rgba(59, 52, 84, .18);
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(59,52,84,.18); }
+.btn-primary { background: #ff7eb0; border-color: #3b3454; color: #fff; }
+.btn-primary:hover { background: #f75d9c; }
+.btn-ghost { opacity: .7; }
+
+/* 顶部标题：宽屏左右排列（标题居左、大按钮居右），窄屏由媒体查询改堆叠 */
+.pixel-topbar { justify-content: space-between; text-align: left; margin-bottom: 20px; }
+.pixel-topbar h1 {
+  font-size: 26px; letter-spacing: 2px; color: #3b3454;
+  text-shadow: 2px 2px 0 #ffd6e8;
+}
+
+/* 醒目大按钮（新建项目入口）——宽屏不占满一行，跟着标题左右排 */
+.btn-hero {
+  display: flex; align-items: center; gap: 14px;
+  flex-shrink: 0;
+  padding: 12px 18px;
+  background: linear-gradient(90deg, #ffd93d, #ff9a3d);
+  border: 3px solid #3b3454; border-radius: 12px;
+  box-shadow: 5px 5px 0 rgba(59, 52, 84, .3);
+  cursor: pointer; text-align: left;
+  transition: transform .12s, box-shadow .12s;
+}
+.btn-hero:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 rgba(59, 52, 84, .35); }
+.btn-hero:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(59,52,84,.3); }
+.hero-icon { font-size: 30px; }
+.hero-text { display: flex; flex-direction: column; }
+.hero-text b { font-size: 17px; color: #3b3454; }
+.hero-text small { color: #6d5b2e; font-size: 12px; }
+
+/* 卡片小图标 */
+.card-icon { font-size: 18px; }
+
+/* 徽标：已完成（绿）/ 已过期（橙）/ 进度条过期色 */
+.badge { border: 2px solid #3b3454; border-radius: 8px; padding: 2px 8px; font-weight: 600; }
+.badge-done { background: #b7f5cd; color: #0d5c35; }
+.badge-overdue { background: #ffe3bd; color: #8a4b08; }
+.fill-overdue { background: #ff9a3d; }
+
+/* 空状态 / 错误状态的小表情放大 */
+.empty-emoji, .error-emoji { font-size: 40px; margin-bottom: 8px; }
+
+/* ============ 四步问卷向导 ============ */
+.wizard-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(59, 52, 84, .45);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.wizard { width: 100%; max-width: 460px; background: #fffdf7; }
+.wiz-title { font-size: 18px; margin-bottom: 12px; color: #3b3454; }
+.wiz-count { margin-bottom: 2px; }
+.wiz-body { display: grid; gap: 12px; }
+.wiz-body label { display: grid; gap: 4px; font-size: 14px; }
+.wiz-body input, .wiz-body textarea {
+  border: 2px solid #cfc8e8; border-radius: 8px;
+  padding: 8px 10px; font-size: 14px; font-family: inherit;
+}
+.wiz-body input:focus, .wiz-body textarea:focus { outline: 2px solid #b5a3f4; border-color: #7c5cd6; }
+.wiz-body textarea { resize: vertical; }
+
+/* 步骤指示器 */
+.wizard-steps { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.wiz-dot {
+  width: 28px; height: 28px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #3b3454; border-radius: 8px;
+  background: #f0ecfa; color: #6d64a8; font-size: 13px; font-weight: 700;
+}
+.wiz-dot.now { background: #ffd93d; color: #3b3454; box-shadow: 2px 2px 0 rgba(59,52,84,.3); }
+.wiz-dot.past { background: #b7f5cd; color: #0d5c35; }
+.wiz-line { flex: 1; height: 3px; background: #e2ddf2; border-radius: 2px; }
+.wiz-line.on { background: #ff9a3d; }
+
+/* 第 4 步的确认摘要 */
+.wiz-summary {
+  background: #f6f3ff; border: 2px dashed #b5a3f4; border-radius: 8px;
+  padding: 10px 12px; display: grid; gap: 4px;
+}
+
+/* 向导底部按钮 */
+.wizard-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.wizard-actions .btn-primary { margin-left: auto; }
+.wizard-actions .btn-ghost { border-color: transparent; box-shadow: none; }
+
+/* 手机宽：顶栏和大按钮恢复上下堆叠 + 原有响应式规则（两栏变单列等） */
+@media (max-width: 640px) {
+  .home-columns { grid-template-columns: 1fr; }
+  .topbar { flex-direction: column; align-items: stretch; gap: 10px; text-align: center; }
+  .topbar h1 { font-size: 20px; }
+  .pixel-topbar h1 { font-size: 22px; }
+  .btn-hero { width: 100%; padding: 12px 14px; }
+  .row { flex-direction: column; }
+  .page { padding: 16px 10px 48px; }
+  .hero-icon { font-size: 24px; }
+  .pixel-topbar h1 { font-size: 22px; }
+  .wizard { max-width: 100%; }
+  .wizard-actions .btn-primary { margin-left: 0; }
+}
