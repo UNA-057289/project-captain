@@ -23,7 +23,7 @@ body {
 
 .project-card { cursor: pointer; transition: border-color .15s; }
 .project-card:hover { border-color: #185fa5; }
-.project-card h3 { font-size: 17px; margin-bottom: 4px; }
+.project-card h3 { font-size: 17px; }
 
 .muted { color: #6b7280; }
 .small { font-size: 13px; }
@@ -61,29 +61,31 @@ body {
 
 /* 详情页 */
 .detail-head { margin-bottom: 16px; }
-.detail-head h1 { font-size: 20px; margin-bottom: 4px; }
+.detail-head h1 { font-size: 20px; margin-bottom: 4px; overflow-wrap: anywhere; }
 
-.days { display: grid; gap: 10px; }
+.days { display: grid; gap: 12px; }
 .day-card.done { background: #f0faf4; border-color: #b7e4d2; }
-.day-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+/* Day 9 修复⑤：加 gap + wrap，窄屏时「当天统计」可换行不挤压 */
+.day-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .check-line { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .check-line input { width: 16px; height: 16px; cursor: pointer; }
 .day-title { font-weight: 600; font-size: 15px; }
 .day-done-tag { color: #0f6e56; font-size: 13px; }
 .day-card.done .day-title { text-decoration: line-through; color: #6b7280; }
 
-.todo-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
-.btn-mini { padding: 3px 8px; font-size: 12px; }
-.edit-box { display: flex; gap: 6px; margin-bottom: 6px; }
-.edit-box input { flex: 1; border: 1px solid #d1d5db; border-radius: 6px; padding: 6px 8px; font-size: 13px; }
-.note { background: #f9fafb; border-radius: 6px; padding: 6px 8px; font-size: 13px; color: #374151; margin-bottom: 6px; }
+/* Day 9 修复④：卡片内间距统一到 4 的倍数（6px → 8px）；.todo-line 是 Day 6 遗留样式、已无人引用，删除 */
+.btn-mini { padding: 4px 8px; font-size: 12px; }
+.edit-box { display: flex; gap: 8px; margin-bottom: 8px; }
+/* Day 9 修复⑤：min-width:0 让输入框可被压缩，窄屏不再把旁边按钮挤出屏幕 */
+.edit-box input { flex: 1; min-width: 0; border: 1px solid #d1d5db; border-radius: 6px; padding: 8px; font-size: 13px; }
+.note { background: #f9fafb; border-radius: 6px; padding: 8px; font-size: 13px; color: #374151; margin-bottom: 8px; overflow-wrap: anywhere; }
 
 /* Day 7 升级：每天多条待办 */
 .items { display: grid; gap: 4px; margin-bottom: 8px; }
-.item-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 0; }
-.item-text { font-size: 14px; }
-.item-row.item-done .item-text { text-decoration: line-through; color: #9ca3af; }
-.item-actions { display: flex; gap: 6px; }
+.item-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; }
+.item-text { font-size: 14px; overflow-wrap: anywhere; }
+.item-row.item-done .item-text { text-decoration: line-through; color: #6b7280; }
+.item-actions { display: flex; gap: 8px; }
 .btn-del:hover { color: #a32d2d; border-color: #a32d2d; background: #fdf2f2; }
 .btn-add { margin-bottom: 8px; }
 .edit-box.inline { flex: 1; margin: 0; }
@@ -112,7 +114,9 @@ body {
 
 /* 分区标题 + 徽标 */
 .section-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
-.card-title-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+/* Day 9 修复④：下边距从 h3 挪到标题行，徽标不再被顶歪；修复⑤：长项目名不撑破卡片 */
+.card-title-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.card-title-line h3 { min-width: 0; overflow-wrap: anywhere; }
 .badge {
   flex-shrink: 0; font-size: 12px; color: #0f6e56;
   background: #e8f7f0; border-radius: 10px; padding: 2px 8px;
@@ -149,9 +153,11 @@ body {
   box-shadow: 3px 3px 0 rgba(59, 52, 84, .18);
 }
 .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(59,52,84,.18); }
-.btn-primary { background: #ff7eb0; border-color: #3b3454; color: #fff; }
-.btn-primary:hover { background: #f75d9c; }
-.btn-ghost { opacity: .7; }
+/* Day 9 修复①：粉底上的白字实测仅 2.37:1（hover 3.00:1）→ 改用深墨字 4.91:1（hover 6.40:1） */
+.btn-primary { background: #ff7eb0; border-color: #3b3454; color: #3b3454; }
+.btn-primary:hover { background: #ffa6c9; }
+/* Day 9 修复③：取消按钮原来是 opacity .7 半透明（等于把文字变淡），改成白底深字的次级按钮 */
+.btn-ghost { background: #fff; color: #3b3454; }
 
 /* 顶部标题：宽屏左右排列（标题居左、大按钮居右），窄屏由媒体查询改堆叠 */
 .pixel-topbar { justify-content: space-between; text-align: left; margin-bottom: 20px; }
@@ -159,6 +165,8 @@ body {
   font-size: 26px; letter-spacing: 2px; color: #3b3454;
   text-shadow: 2px 2px 0 #ffd6e8;
 }
+/* Day 9 修复②：灰字压在粉紫渐变背景上只有 4.07:1 → 顶栏、分区标题两处单独加深（卡片白底内的 .muted 不动） */
+.pixel-topbar .muted, .section-title .muted { color: #4b5563; }
 
 /* 醒目大按钮（新建项目入口）——宽屏不占满一行，跟着标题左右排 */
 .btn-hero {
@@ -176,7 +184,7 @@ body {
 .hero-icon { font-size: 30px; }
 .hero-text { display: flex; flex-direction: column; }
 .hero-text b { font-size: 17px; color: #3b3454; }
-.hero-text small { color: #6d5b2e; font-size: 12px; }
+.hero-text small { color: #4a3f1f; font-size: 12px; }
 
 /* 卡片小图标 */
 .card-icon { font-size: 18px; }
@@ -198,7 +206,8 @@ body {
 }
 .wizard { width: 100%; max-width: 460px; background: #fffdf7; }
 .wiz-title { font-size: 18px; margin-bottom: 12px; color: #3b3454; }
-.wiz-count { margin-bottom: 2px; }
+/* Day 9 修复④：2px → 4px，归入间距阶梯 */
+.wiz-count { margin-bottom: 4px; }
 .wiz-body { display: grid; gap: 12px; }
 .wiz-body label { display: grid; gap: 4px; font-size: 14px; }
 .wiz-body input, .wiz-body textarea {
@@ -209,12 +218,12 @@ body {
 .wiz-body textarea { resize: vertical; }
 
 /* 步骤指示器 */
-.wizard-steps { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.wizard-steps { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 .wiz-dot {
   width: 28px; height: 28px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   border: 2px solid #3b3454; border-radius: 8px;
-  background: #f0ecfa; color: #6d64a8; font-size: 13px; font-weight: 700;
+  background: #f0ecfa; color: #5a5192; font-size: 13px; font-weight: 700;
 }
 .wiz-dot.now { background: #ffd93d; color: #3b3454; box-shadow: 2px 2px 0 rgba(59,52,84,.3); }
 .wiz-dot.past { background: #b7f5cd; color: #0d5c35; }
@@ -224,25 +233,34 @@ body {
 /* 第 4 步的确认摘要 */
 .wiz-summary {
   background: #f6f3ff; border: 2px dashed #b5a3f4; border-radius: 8px;
-  padding: 10px 12px; display: grid; gap: 4px;
+  padding: 10px 12px; display: grid; gap: 4px; overflow-wrap: anywhere;
 }
 
 /* 向导底部按钮 */
-.wizard-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.wizard-actions { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
 .wizard-actions .btn-primary { margin-left: auto; }
-.wizard-actions .btn-ghost { border-color: transparent; box-shadow: none; }
+
+/* ---- Day 9 修复③：按钮状态补全 ---- */
+/* 键盘 Tab 走到按钮时画出明显焦点圈（此前全站没有任何焦点样式，键鼠用户看不见选中了谁） */
+.btn:focus-visible, .btn-hero:focus-visible {
+  outline: 3px solid #185fa5; outline-offset: 2px;
+}
+/* 不可用态：置灰 + 鼠标变禁用符号（当前功能还没用到，先把规范写下来备用） */
+.btn:disabled, .btn[disabled] {
+  cursor: not-allowed; background: #f3f4f6; color: #6b7280; box-shadow: none;
+}
 
 /* 手机宽：顶栏和大按钮恢复上下堆叠 + 原有响应式规则（两栏变单列等） */
 @media (max-width: 640px) {
   .home-columns { grid-template-columns: 1fr; }
-  .topbar { flex-direction: column; align-items: stretch; gap: 10px; text-align: center; }
-  .topbar h1 { font-size: 20px; }
+  .topbar { flex-direction: column; align-items: stretch; gap: 12px; text-align: center; }
   .pixel-topbar h1 { font-size: 22px; }
   .btn-hero { width: 100%; padding: 12px 14px; }
   .row { flex-direction: column; }
   .page { padding: 16px 10px 48px; }
   .hero-icon { font-size: 24px; }
-  .pixel-topbar h1 { font-size: 22px; }
   .wizard { max-width: 100%; }
+  /* Day 9 修复⑤：窄屏向导按钮平分宽度，手指好点 */
   .wizard-actions .btn-primary { margin-left: 0; }
+  .wizard-actions .btn { flex: 1; }
 }
