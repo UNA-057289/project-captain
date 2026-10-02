@@ -88,6 +88,8 @@ body {
 .item-actions { display: flex; gap: 8px; }
 .btn-del:hover { color: #a32d2d; border-color: #a32d2d; background: #fdf2f2; }
 .btn-add { margin-bottom: 8px; }
+/* Day 10 修复①：把某天的待办全删光后，给一句看得见的提示（不然那天会空一大块，像出了错） */
+.empty-day { border: 2px dashed #cfc8e8; border-radius: 8px; padding: 12px; text-align: center; }
 .edit-box.inline { flex: 1; margin: 0; }
 
 /* AI 生成按钮（模拟版，下周换真接口） */
@@ -159,8 +161,9 @@ body {
 /* Day 9 修复③：取消按钮原来是 opacity .7 半透明（等于把文字变淡），改成白底深字的次级按钮 */
 .btn-ghost { background: #fff; color: #3b3454; }
 
-/* 顶部标题：宽屏左右排列（标题居左、大按钮居右），窄屏由媒体查询改堆叠 */
-.pixel-topbar { justify-content: space-between; text-align: left; margin-bottom: 20px; }
+/* 顶部标题：Day 10 用户反馈——「有小火箭的新建入口不够大、占的位置太小」
+   改法：标题独占上面一行，大按钮独占下面一整行、横跨整个页面宽度（变大最直接的方式） */
+.pixel-topbar { flex-direction: column; align-items: stretch; gap: 16px; text-align: left; margin-bottom: 20px; }
 .pixel-topbar h1 {
   font-size: 26px; letter-spacing: 2px; color: #3b3454;
   text-shadow: 2px 2px 0 #ffd6e8;
@@ -168,11 +171,11 @@ body {
 /* Day 9 修复②：灰字压在粉紫渐变背景上只有 4.07:1 → 顶栏、分区标题两处单独加深（卡片白底内的 .muted 不动） */
 .pixel-topbar .muted, .section-title .muted { color: #4b5563; }
 
-/* 醒目大按钮（新建项目入口）——宽屏不占满一行，跟着标题左右排 */
+/* 醒目大按钮（新建项目入口）——Day 10：独占整行、横跨页宽，图标与字号同步上一档 */
 .btn-hero {
-  display: flex; align-items: center; gap: 14px;
-  flex-shrink: 0;
-  padding: 12px 18px;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  width: 100%;
+  padding: 22px 24px;
   background: linear-gradient(90deg, #ffd93d, #ff9a3d);
   border: 3px solid #3b3454; border-radius: 12px;
   box-shadow: 5px 5px 0 rgba(59, 52, 84, .3);
@@ -181,10 +184,10 @@ body {
 }
 .btn-hero:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 rgba(59, 52, 84, .35); }
 .btn-hero:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(59,52,84,.3); }
-.hero-icon { font-size: 30px; }
-.hero-text { display: flex; flex-direction: column; }
-.hero-text b { font-size: 17px; color: #3b3454; }
-.hero-text small { color: #4a3f1f; font-size: 12px; }
+.hero-icon { font-size: 44px; line-height: 1; }
+.hero-text { display: flex; flex-direction: column; gap: 4px; }
+.hero-text b { font-size: 24px; color: #3b3454; }
+.hero-text small { color: #4a3f1f; font-size: 14px; }
 
 /* 卡片小图标 */
 .card-icon { font-size: 18px; }
@@ -250,15 +253,17 @@ body {
   cursor: not-allowed; background: #f3f4f6; color: #6b7280; box-shadow: none;
 }
 
-/* 手机宽：顶栏和大按钮恢复上下堆叠 + 原有响应式规则（两栏变单列等） */
+/* 手机宽：顶栏文字居中 + 大按钮缩小一档（按钮已是整行宽，这里只收尺寸，避免过大占满屏幕） */
 @media (max-width: 640px) {
   .home-columns { grid-template-columns: 1fr; }
   .topbar { flex-direction: column; align-items: stretch; gap: 12px; text-align: center; }
   .pixel-topbar h1 { font-size: 22px; }
-  .btn-hero { width: 100%; padding: 12px 14px; }
+  .btn-hero { padding: 16px 14px; gap: 12px; }
   .row { flex-direction: column; }
   .page { padding: 16px 10px 48px; }
-  .hero-icon { font-size: 24px; }
+  .hero-icon { font-size: 34px; }
+  .hero-text b { font-size: 20px; }
+  .hero-text small { font-size: 13px; }
   .wizard { max-width: 100%; }
   /* Day 9 修复⑤：窄屏向导按钮平分宽度，手指好点 */
   .wizard-actions .btn-primary { margin-left: 0; }

@@ -127,17 +127,12 @@ export function addTodoItem(projectId, dayId, content) {
 }
 
 // 删除某天的一条待办（Day 7 用户反馈：能删不要的）
-// 规则：一天里至少留一条——删到只剩一条时，把它清空回「待填写」而不是删光（保证每天有位置）
+// Day 10 修复①：改成「点了就真删」，允许一天变成 0 条。
+// 原来剩最后一条时只清空内容、界面上看不出发生了什么，用户会以为「删」按钮坏了；
+// 删空之后想加回来，点「＋ 添加一条」即可——少一次打断，结果看得见。
 export function deleteTodoItem(projectId, dayId, itemId) {
   return updateDay(projectId, dayId, d => {
-    if (d.items.length > 1) {
-      d.items = d.items.filter(i => i.id !== itemId)
-    } else {
-      const it = d.items[0]
-      it.content = ''
-      it.isDone = false
-      it.doneAt = null
-    }
+    d.items = d.items.filter(i => i.id !== itemId)
   })
 }
 
@@ -171,21 +166,24 @@ export function aiFillPlan(projectId) {
         suggestion = `后期：检查「${topic}」的遗留问题，开始收尾打磨（第 ${n} 天）`
       }
       // 只填空位，不动你已经写好的内容（用户负责在 AI 生成的内容上修改）
+      // Day 10 修复②：先复用已有空行（避免同一天堆两条），没有再新建一条
       const empty = d.items.find(i => !i.content && !i.isDone)
       if (empty) {
         empty.content = suggestion
       } else {
         d.items.push({ id: makeItemId(), content: suggestion, isDone: false, doneAt: null })
-      }
-    })
+      }    })
   })
 }
 
 // 计算某项目的进度百分比（PRD 功能 6：全部条目里已完成的比例，四舍五入）
+// Day 10 修复②：只把「有内容的」条目算进分母。新建项目时每天会预放一条空白占位，
+// 那些空行不是任务，算进去会让总数虚高、进度永远到不了 100%
 export function calcProgress(project) {
   const days = (project && project.days) || []
   const items = days.flatMap(d => d.items || [])
-  if (items.length === 0) return 0
-  const done = items.filter(t => t.isDone).length
-  return Math.round((done / items.length) * 100)
+  const filled = items.filter(i => (i.content || '').trim() !== '')
+  if (filled.length === 0) return 0
+  const done = filled.filter(i => i.isDone).length
+  return Math.round((done / filled.length) * 100)
 }

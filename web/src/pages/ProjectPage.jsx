@@ -23,7 +23,9 @@ export default function ProjectPage() {
 
   const progress = calcProgress(project)
   const allItems = project.days.flatMap(d => d.items)
-  const doneCount = allItems.filter(i => i.isDone).length
+  // Day 10 修复②：只统计有内容的条目，空白占位不算任务（与计算进度的口径保持一致）
+  const filledItems = allItems.filter(i => (i.content || '').trim() !== '')
+  const doneCount = filledItems.filter(i => i.isDone).length
 
   return (
     <div className="page">
@@ -43,7 +45,7 @@ export default function ProjectPage() {
           </div>
           <span className="progress-num">{progress}%</span>
         </div>
-        <p className="muted small" style={{ marginTop: 4 }}>共 {allItems.length} 条待办，已完成 {doneCount} 条</p>
+        <p className="muted small" style={{ marginTop: 4 }}>共 {filledItems.length} 条待办，已完成 {doneCount} 条</p>
 
         {/* AI 生成每日安排（Day 7 方案 A：模拟版，下周换真 AI 接口） */}
         <div className="ai-line">
@@ -71,18 +73,23 @@ function DayGroup({ projectId, day, onDone }) {
   const [adding, setAdding] = useState(false)
   const [addDraft, setAddDraft] = useState('')
 
-  const doneCount = day.items.filter(i => i.isDone).length
-  const allDone = doneCount === day.items.length && day.items.every(i => i.content)
+  // Day 10 修复②：只数有内容的条目（空白占位不算任务）；修复①：条数为 0 时不再显示「已完成」
+  const filled = day.items.filter(i => (i.content || '').trim() !== '')
+  const doneCount = filled.filter(i => i.isDone).length
+  const allDone = filled.length > 0 && doneCount === filled.length
 
   return (
     <div className={'card day-card' + (allDone ? ' done' : '')}>
       <div className="day-head">
         <span className="day-title">{day.day}</span>
-        <span className="muted small">已完成 {doneCount} / 共 {day.items.length} 条</span>
+        <span className="muted small">{filled.length === 0 ? '这天还没安排' : `已完成 ${doneCount} / 共 ${filled.length} 条`}</span>
       </div>
 
-      {/* 这一天的所有待办条目 */}
+      {/* 这一天的所有待办条目（Day 10 修复①：删空后给出看得见的空状态提示） */}
       <div className="items">
+        {day.items.length === 0 && (
+          <p className="muted small empty-day">这天还没有待办，点下面的「＋ 添加一条」写点什么</p>
+        )}
         {day.items.map(it => (
           <ItemRow key={it.id} projectId={projectId} dayId={day.id} item={it} onDone={onDone} />
         ))}
