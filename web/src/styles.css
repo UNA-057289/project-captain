@@ -69,6 +69,33 @@ body {
 .day-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .check-line { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .check-line input { width: 16px; height: 16px; cursor: pointer; }
+/* Day 11：勾选后的"生效反馈"动效 —— 淡绿闪一下 + 勾选框弹一下 + 冒一句「✓ 已完成」 */
+.item-just-done { animation: tick-flash .9s ease-out; border-radius: 6px; }
+@keyframes tick-flash {
+  0%   { background: #d9f7e6; }
+  100% { background: transparent; }
+}
+.item-just-done .check-line input { animation: tick-pop .32s ease-out; }
+@keyframes tick-pop {
+  0%   { transform: scale(.6); }
+  55%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.tick-hint {
+  color: #0f6e56; font-size: 12px; font-weight: 600;
+  animation: tick-hint-in .9s ease-out;
+}
+@keyframes tick-hint-in {
+  0%   { opacity: 0; transform: translateX(-4px); }
+  20%  { opacity: 1; transform: translateX(0); }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* 尊重系统设置：用户开了"减少动态效果"就只保留颜色变化，不做弹跳 */
+@media (prefers-reduced-motion: reduce) {
+  .item-just-done, .item-just-done .check-line input, .tick-hint { animation: none; }
+  .item-just-done { background: #d9f7e6; }
+}
 .day-title { font-weight: 600; font-size: 15px; }
 .day-done-tag { color: #0f6e56; font-size: 13px; }
 .day-card.done .day-title { text-decoration: line-through; color: #6b7280; }
@@ -84,7 +111,11 @@ body {
 .items { display: grid; gap: 4px; margin-bottom: 8px; }
 .item-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; }
 .item-text { font-size: 14px; overflow-wrap: anywhere; }
-.item-row.item-done .item-text { text-decoration: line-through; color: #6b7280; }
+/* Day 9 修复②：原 #9ca3af 只有 2.54:1 看不清
+   Day 11：灰字 + 删除线容易被读成「这条被删了」——保留删除线但把颜色改成偏绿的墨色，
+   并让勾选框本身变成绿色实心，整体读起来是「完成」而不是「删除」 */
+.item-row.item-done .item-text { text-decoration: line-through; color: #5f7a6b; }
+.item-row.item-done .check-line input { accent-color: #1d9e75; }
 .item-actions { display: flex; gap: 8px; }
 .btn-del:hover { color: #a32d2d; border-color: #a32d2d; background: #fdf2f2; }
 .btn-add { margin-bottom: 8px; }

@@ -1,5 +1,5 @@
 // 项目详情页：PRD 功能 3、4、5、6 + Day 7 用户反馈升级（每天多条待办、可加可删、AI 生成草案）
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import {
   loadData, toggleTodo, editTodoContent, setDayNote,
@@ -153,19 +153,45 @@ function DayGroup({ projectId, day, onDone }) {
 }
 
 // 单条待办：勾选框 + 文字（可编辑）+ 删除
+// Day 11：勾选后加"生效反馈"——淡绿底色闪一下 + 勾选框弹一下，让人明确知道点到了
 function ItemRow({ projectId, dayId, item, onDone }) {
   const [editing, setEditing] = useState(false)
+  // justDone 只在「刚刚勾上」时短暂为真，用来触发一次动效；取消勾选不触发
+  const [justDone, setJustDone] = useState(false)
+  // 记住上一次的定时器：连续快速勾选/取消时，先清掉旧的，避免动效被上一个定时器提前掐断
+  const timerRef = useRef(null)
   const display = item.content || '待填写'
 
+  // 组件被删掉（比如整条被删）时，把定时器一起清掉，防止它在已经消失的组件上跑
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
+
+  function handleToggle() {
+    const willBeDone = !item.isDone   // 勾选动作执行后的状态
+    toggleTodo(projectId, dayId, item.id)
+    if (willBeDone) {
+      if (timerRef.current) clearTimeout(timerRef.current) // 清掉上一次，让这次动画从头播
+      setJustDone(true)
+      // 动效 900ms 后自动退场，状态回到普通"已完成"（不会一直闪）
+      timerRef.current = setTimeout(() => setJustDone(false), 900)
+    } else {
+      // 取消勾选：立刻收掉动效，不残留「✓ 已完成」的字样
+      if (timerRef.current) clearTimeout(timerRef.current)
+      setJustDone(false)
+    }
+    onDone()
+  }
+
   return (
-    <div className={'item-row' + (item.isDone ? ' item-done' : '')}>
+    <div className={'item-row' + (item.isDone ? ' item-done' : '') + (justDone ? ' item-just-done' : '')}>
       <label className="check-line">
         <input
           type="checkbox"
           checked={item.isDone}
-          onChange={() => { toggleTodo(projectId, dayId, item.id); onDone() }}
+          onChange={handleToggle}
         />
         {editing ? null : <span className={item.content ? 'item-text' : 'item-text muted'}>{display}</span>}
+        {/* 刚勾上时，右边短暂显示一句"已完成"，把"这条是完成了，不是被删了"说清楚 */}
+        {justDone && <span className="tick-hint">✓ 已完成</span>}
       </label>
 
       {!editing && (
